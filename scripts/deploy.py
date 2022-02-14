@@ -11,7 +11,7 @@ def deploy_token_farm_and_dapp_token():
     token_farm = TokenFarm.deploy(
         yiet_token.address,
         {"from": account},
-        publis_source=config["networks"][network.show_active()].get("verify", False),
+        publish_source=config["networks"][network.show_active()].get("verify", False),
     )
     tx = yiet_token.transfer(
         token_farm.address, yiet_token.totalSupply() - KEPT_BALANCE, {"from": account}
@@ -25,10 +25,20 @@ def deploy_token_farm_and_dapp_token():
         fau_token: get_contract("dai_usd_price_feed"),
         weth_token: get_contract("eth_usd_price_feed"),
     }
-    add_allowed_tokens(token_farm,)
-    
-def add_allowed_tokens(token_farm, dict_of_allowed_tokens, account)
-    pass
+    add_allowed_tokens(token_farm, dict_of_allowed_tokens, account)
+    return token_farm, yiet_token
+
+
+def add_allowed_tokens(token_farm, dict_of_allowed_tokens, account):
+    for token in dict_of_allowed_tokens:
+        add_tx = token_farm.addAllowedTokens(token.address, {"from": account})
+        add_tx.wait(1)
+        set_tx = token_farm.setPriceFeedContract(
+            token.address, dict_of_allowed_tokens[token], {"from:": account}
+        )
+        set_tx.wait(1)
+    return token_farm
+
 
 def main():
     deploy_token_farm_and_dapp_token()

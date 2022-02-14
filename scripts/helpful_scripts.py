@@ -3,11 +3,15 @@ from brownie import (
     network,
     config,
     Contract,
-    AdvancedCollectible,
+    LinkToken,
     MockDAI,
-    MockWETH
+    MockWETH,
+    MockV3Aggregator,
 )
 import os
+
+INITIAL_PRICE_FEED_VALUE = 2000000000000000000000
+DECIMALS = 18
 
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
@@ -30,7 +34,8 @@ def get_account(index=None, id=None):
 
 
 contract_to_mock = {
-    "eth_usd_price_feed" MockV3Aggregator,
+    "eth_usd_price_feed": MockV3Aggregator,
+    "dai_usd_price_feed": MockV3Aggregator,
     "fau_token": MockDAI,
     "weth_token": MockWETH,
 }
@@ -68,20 +73,25 @@ def get_contract(contract_name):
     return contract
 
 
-def deploy_mocks():
+def deploy_mocks(decimals=DECIMALS, initial_value=INITIAL_PRICE_FEED_VALUE):
     """
     Use this script if you want to deploy mocks to testnet
     """
     print(f"The active network is {network.show_active()}")
-    print("Deploying mocks...")
+    print("Deploying Mocks...")
     account = get_account()
-    print("Deploying Mock LinkToken")
+    print("Deploying Mock Link Token...")
     link_token = LinkToken.deploy({"from": account})
-    print(f"Link token deployed to {link_token.address}")
-    print("Deploying Mock VRF Coordinator...")
-    vrf_coordinator = VRFCoordinatorMock.deploy(link_token.address, {"from": account})
-    print(f"VRFCoordinator deployed to {vrf_coordinator.address}")
-    print("All Done")
+    print("Deploying Mock Price Feed...")
+    mock_price_feed = MockV3Aggregator.deploy(
+        decimals, initial_value, {"from": account}
+    )
+    print(f"Deployed to {mock_price_feed.address}")
+    dai_token = MockDAI.deploy({"from": account})
+    print(f"Deployed to {dai_token.address}")
+    print("Deploying Mock WETH")
+    weth_token = MockWETH.deploy({"from": account})
+    print(f"Deployed to {weth_token.address}")
 
 
 def get_publish_source():
