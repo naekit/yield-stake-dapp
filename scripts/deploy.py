@@ -20,7 +20,11 @@ def deploy_token_farm_and_dapp_token():
     # yiet_token, weth_token, fau_token/dai
     weth_token = get_contract("weth_token")
     fau_token = get_contract("fau_token")
-    
+    dict_of_allowed_tokens = {
+        yiet_token: get_contract("dai_usd_price_feed"),
+        fau_token: get_contract("dai_usd_price_feed"),
+        weth_token: get_contract("eth_usd_price_feed"),
+    }
     add_allowed_tokens(token_farm,)
     
 def add_allowed_tokens(token_farm, dict_of_allowed_tokens, account)

@@ -3,9 +3,9 @@ from brownie import (
     network,
     config,
     Contract,
-    LinkToken,
-    VRFCoordinatorMock,
     AdvancedCollectible,
+    MockDAI,
+    MockWETH
 )
 import os
 
@@ -30,8 +30,9 @@ def get_account(index=None, id=None):
 
 
 contract_to_mock = {
-    "vrf_coordinator": VRFCoordinatorMock,
-    "link_token": LinkToken,
+    "eth_usd_price_feed" MockV3Aggregator,
+    "fau_token": MockDAI,
+    "weth_token": MockWETH,
 }
 
 
