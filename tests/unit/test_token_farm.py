@@ -60,6 +60,7 @@ def test_issue_tokens(amount_staked):
     # staking 1 yiet_token == in price to 1 eth
     # initial pf value of MOCK is 2000000000000000000000 / price of ETH
     # so we expect to get 2000 yiet tokens in reward
+    99000000000000000000
     assert (
         yiet_token.balanceOf(account.address)
         == starting_balance + INITIAL_PRICE_FEED_VALUE

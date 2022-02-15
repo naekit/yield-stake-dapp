@@ -63,6 +63,7 @@ contract TokenFarm is Ownable {
                     allowedTokens[allowedTokensIndex]
                 );
         }
+        return totalValue;
     }
 
     function getUserSingleTokenValue(address _user, address _token)
@@ -80,7 +81,7 @@ contract TokenFarm is Ownable {
         // 10000000000000000000 ETH
         // ETH/USD --> 10000000000
         // 10 * 100 = 1,000
-        return ((stakingBalance[_token][_user] * price) / (10**decimals));
+        return (stakingBalance[_token][_user] * price / (10**decimals));
     }
 
     function getTokenValue(address _token)
