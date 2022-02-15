@@ -41,4 +41,4 @@ def add_allowed_tokens(token_farm, dict_of_allowed_tokens, account):
 
 
 def main():
-    deploy_token_farm_and_dapp_token()
+    deploy_token_farm_and_yiet_token()
