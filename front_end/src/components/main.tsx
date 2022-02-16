@@ -7,6 +7,7 @@ import yiet from "../YIET.png"
 import eth from "../eth.png"
 import dai from "../dai.png"
 import { YourWallet } from "./yourWallet/YourWallet"
+import { makeStyles } from "@material-ui/core"
 
 
 export type Token = {
@@ -14,6 +15,14 @@ export type Token = {
     address: string
     name: string
 }
+
+const useStyles = makeStyles((theme) => ({
+    title: {
+        color: theme.palette.common.white,
+        textAlign: "center",
+        padding: theme.spacing(4)
+    }
+}))
 
 export const Main = () => {
     // show token amount from wallet
@@ -23,6 +32,7 @@ export const Main = () => {
 
     // send brownie-config to src folder
     // send build folder (yiet token and mock addresses)
+    const classes = useStyles()
     const { chainId } = useEthers()
     const networkName = chainId ? helperConfig[chainId] : "dev"
 
@@ -49,5 +59,9 @@ export const Main = () => {
 
     ]
 
-    return (<YourWallet supportedTokens={supportedTokens} />)
+    return (<>
+        <h1 className={classes.title}>Yiet Stake App</h1>
+        <YourWallet supportedTokens={supportedTokens} />
+    </>
+    )
 }

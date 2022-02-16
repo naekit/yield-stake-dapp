@@ -15,7 +15,6 @@ function App() {
     }}>
       <Header />
       <Container maxWidth="md">
-        <div> HI!! </div>
         <Main />
       </Container>
     </DAppProvider>
