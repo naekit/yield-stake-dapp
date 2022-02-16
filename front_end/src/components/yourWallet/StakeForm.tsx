@@ -1,10 +1,11 @@
 import { formatUnits } from "@ethersproject/units"
 import { Button, Input } from "@material-ui/core"
-import { useEthers, useTokenBalance } from "@usedapp/core"
+import { useEthers, useNotifications, useTokenBalance } from "@usedapp/core"
 import { utils } from "@usedapp/core/node_modules/ethers"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useStakeTokens } from "../../hooks/useStakeTokens"
 import { Token } from "../Main"
+
 
 export interface StakeFormProps {
     token: Token
@@ -15,6 +16,8 @@ export const StakeForm = ({ token }: StakeFormProps) => {
     const { account } = useEthers()
     const tokenBalance = useTokenBalance(tokenAddress, account)
     const formattedTokenBalance: number = tokenBalance ? parseFloat(formatUnits(tokenBalance, 18)) : 0
+    const { notifications } = useNotifications()
+
 
     const [amount, setAmount] = useState<number | string | Array<number | string>>(0)
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,11 +26,24 @@ export const StakeForm = ({ token }: StakeFormProps) => {
         console.log(newAmount)
     }
 
-    const { approve, approveErc20State } = useStakeTokens(tokenAddress)
+    const { approveAndStake, approveErc20State } = useStakeTokens(tokenAddress)
     const handleStakeSubmit = () => {
         const amountAsWei = utils.parseEther(amount.toString())
-        return approve(amountAsWei)
+        return approveAndStake(amountAsWei.toString())
     }
+
+    useEffect(() => {
+        if (notifications.filter((notification) =>
+            notification.type === "transactionSucceed" &&
+            notification.transactionName === "Approve ERC20 transfer").length > 0) {
+            console.log("Approved!")
+        }
+        if (notifications.filter((notification) =>
+            notification.type === "transactionSucceed" &&
+            notification.transactionName === "Stake Tokens").length > 0) {
+            console.log("Tokens Staked!")
+        }
+    }, [notifications])
 
     return (
         <>
