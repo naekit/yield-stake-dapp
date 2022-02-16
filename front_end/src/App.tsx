@@ -10,7 +10,7 @@ function App() {
       supportedChains: [ChainId.Kovan],
       notifications: {
         expirationPeriod: 1000,
-        checkInterval
+        checkInterval: 1000
       }
     }}>
       <Header />
