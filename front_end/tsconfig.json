@@ -22,6 +22,8 @@
     "suppressImplicitAnyIndexErrors": true
   },
   "include": [
-    "src"
-  ]
+    "src",
+    "src/**/*.ts",
+    "tests/**/*.ts"
+  ],
 }
