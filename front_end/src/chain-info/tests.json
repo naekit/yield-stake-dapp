@@ -2,6 +2,7 @@
   "contracts": {
     "LinkToken": "49e7bae2df618e81d877632c6ad55872ff2ce801",
     "MockDAI": "ab1a66bc3a36fcf1351179f7adbca527a0f6c911",
+    "MockERC20": "a76a17e80ec61ec18ed8fd4f87a9ed109849a985",
     "MockOracle": "7f09d8b642ed1af8d9a3e094ab619f25db4db23c",
     "MockV3Aggregator": "a343bf9ab36dab93298c11f3196b32a1566d14c1",
     "MockWETH": "21c4935a4e5b858efd5c83f628f8bb78bafdabce",
@@ -18,10 +19,32 @@
     "tests/unit/test_token_farm.py": {
       "coverage": false,
       "isolated": false,
-      "results": "ss.",
-      "sha1": "52815b9c14765c5c1d14f367c2ce986c8b70902d",
-      "txhash": []
+      "results": "...",
+      "sha1": "efbadb0dcd8a70c0b0650a8ffe42e789272c7007",
+      "txhash": [
+        "f53c112cec066bba03f321f18589821c8b240e5a"
+      ]
     }
   },
-  "tx": {}
+  "tx": {
+    "f53c112cec066bba03f321f18589821c8b240e5a": {
+      "TokenFarm": {
+        "0": [
+          [],
+          [],
+          []
+        ],
+        "2": [
+          [],
+          [],
+          []
+        ],
+        "4": [
+          [],
+          [],
+          []
+        ]
+      }
+    }
+  }
 }
